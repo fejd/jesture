@@ -1,0 +1,16 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+        jcenter()
+        // Use local Maven repository during development
+        // Note: mavenLocal() does not work, hence the workaround below
+        maven { url System.getenv('HOME') + "/.m2/repository/" }
+    }
+}
