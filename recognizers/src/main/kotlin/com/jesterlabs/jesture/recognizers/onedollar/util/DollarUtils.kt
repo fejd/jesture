@@ -66,7 +66,7 @@ fun pathLength(points: List<Point>) : Double {
 fun distance(firstPoint: Point, secondPoint: Point) : Double {
     val dx = firstPoint.x - secondPoint.x
     val dy = firstPoint.y - secondPoint.y
-    return Math.sqrt((dx * dx + dy * dy))
+    return Math.sqrt(Math.pow(dx, 2.0) + Math.pow(dy, 2.0))
 }
 
 fun indicativeAngle(points: List<Point>) : Double {
