@@ -1,5 +1,6 @@
 package com.jesterlabs.jesture.recognizers.onedollar
 
+import com.jesterlabs.jesture.recognizers.common.data.Point
 import org.junit.Test
 import java.util.*
 

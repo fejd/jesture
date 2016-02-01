@@ -1,1 +1,1 @@
-include 'recognizers', 'clients:android:app'
+include 'recognizers', 'clients:android:app', 'clients:java'

@@ -1,6 +1,7 @@
 package com.jesterlabs.jesture.recognizers.onedollar
 
-import com.fejd.unistroke.recognizers.onedollar.util.*
+import com.jesterlabs.jesture.recognizers.common.data.Point
+import com.jesterlabs.jesture.recognizers.onedollar.util.*
 
 class Template(val name: String, val points: List<Point>) {
     var processedPoints = points

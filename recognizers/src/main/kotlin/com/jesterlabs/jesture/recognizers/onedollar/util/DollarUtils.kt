@@ -1,7 +1,10 @@
-package com.fejd.unistroke.recognizers.onedollar.util
+package com.jesterlabs.jesture.recognizers.onedollar.util
 
-import com.jesterlabs.jesture.recognizers.onedollar.Point
-import com.jesterlabs.jesture.recognizers.onedollar.Rectangle
+import com.jesterlabs.jesture.recognizers.common.data.Point
+import com.jesterlabs.jesture.recognizers.common.data.Rectangle
+import com.jesterlabs.jesture.recognizers.common.util.centroid
+import com.jesterlabs.jesture.recognizers.common.util.distance
+import com.jesterlabs.jesture.recognizers.common.util.pathLength
 import com.jesterlabs.jesture.recognizers.onedollar.Template
 import java.util.*
 
@@ -12,9 +15,7 @@ val ANGLE_PRECISION = 2.0
 val HALF_DIAGONAL = 0.5 * Math.sqrt(250.0 * 250.0 + 250.0 * 250.0)
 val PHI = 0.5 * (-1.0 + Math.sqrt(5.0)) // Golden Ratio
 
-
 fun resample(points: List<Point>, numPoints: Int) : List<Point> {
-    /* Java implementation - straight translation to Kotlin */
     val I = pathLength(points) / (numPoints - 1.0);
     var D = 0.0;
     var newpoints = ArrayList<Point>();
@@ -51,40 +52,10 @@ fun resample(points: List<Point>, numPoints: Int) : List<Point> {
     return newpoints;
 }
 
-fun pathLength(points: List<Point>) : Double {
-    var distance = 0.0
-
-    for (i in points.indices) {
-        if (i == 0) continue
-        val first = points.get(i-1)
-        val second = points.get(i)
-        distance += distance(first, second)
-    }
-    return distance
-}
-
-fun distance(firstPoint: Point, secondPoint: Point) : Double {
-    val dx = firstPoint.x - secondPoint.x
-    val dy = firstPoint.y - secondPoint.y
-    return Math.sqrt(Math.pow(dx, 2.0) + Math.pow(dy, 2.0))
-}
-
 fun indicativeAngle(points: List<Point>) : Double {
     var c = centroid(points);
     return Math.atan2((c.y - points.get(0).y),
             (c.x - points.get(0).x))
-}
-
-fun centroid(points: List<Point>) : Point {
-    var x = 0.0
-    var y = 0.0
-    for (i in points) {
-        x += i.x
-        y += i.y
-    }
-    x /= points.size;
-    y /= points.size;
-    return Point(x, y);
 }
 
 // rotates points around centroid
