@@ -15,7 +15,6 @@ fun main(args: Array<String>) {
     with (JFrame("Unistroke Recognizer")) {
         setSize(600, 600)
         defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-        //val label = JLabel("Drag the mouse around", CENTER)
         val canvas = StrokeCanvas()
         val scrollPane = JScrollPane(canvas)
         add(scrollPane)
