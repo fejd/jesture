@@ -29,9 +29,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="kotlin-stdlib-1.0.0-rc-1036" level="project" />
+    <orderEntry type="library" exported="" name="kotlin-stdlib-1.0.0" level="project" />
     <orderEntry type="library" exported="" name="recognizers-0.1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="kotlin-runtime-1.0.0-rc-1036" level="project" />
+    <orderEntry type="library" exported="" name="kotlin-runtime-1.0.0" level="project" />
     <orderEntry type="library" exported="" name="java.java" level="project" />
   </component>
 </module>
