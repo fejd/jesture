@@ -21,15 +21,20 @@
 package com.jesterlabs.recognizer.ui
 
 import android.app.Activity
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
-import android.widget.TextView
+import android.view.View
+import android.view.ViewManager
 import com.jesterlabs.jesture.recognizers.common.data.Point
 import com.jesterlabs.jesture.recognizers.onedollar.OneDollarRecognizer
+import org.jetbrains.anko.custom.ankoView
 import org.jetbrains.anko.dip
 import org.jetbrains.anko.padding
-import org.jetbrains.anko.textView
 import org.jetbrains.anko.verticalLayout
 import java.util.*
 
@@ -43,37 +48,90 @@ class HelloRecognizerActivity : Activity() {
         points = ArrayList<Point>()
     }
 
-    protected override fun onCreate(savedInstanceState : Bundle?) {
+    inline fun ViewManager.resultView() = resultView {}
+    inline fun ViewManager.resultView(init: ResultView.() -> Unit) = ankoView({ ResultView(it) }, init)
+
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
 
         val ID_TEXT_VIEW = 1
         verticalLayout {
             padding = dip(30)
 
-            val resultText = textView {
-                textSize = 24f
+            val resultView = resultView {
                 id = ID_TEXT_VIEW
             }
 
             setOnTouchListener { resultText, motionEvent ->
+                val resultView = findViewById(ID_TEXT_VIEW) as ResultView
                 when(motionEvent.actionMasked) {
                     MotionEvent.ACTION_DOWN -> {
+                        resultView.clearResults()
                         points.clear()
                         points.add(Point(motionEvent.x.toDouble(), motionEvent.y.toDouble()))
                     }
-                    MotionEvent.ACTION_MOVE -> points.add(Point(motionEvent.x.toDouble(), motionEvent.y.toDouble()))
+                    MotionEvent.ACTION_MOVE -> {
+                        points.add(Point(motionEvent.x.toDouble(), motionEvent.y.toDouble()))
+                    }
                     MotionEvent.ACTION_UP -> {
                         points.add(Point(motionEvent.x.toDouble(), motionEvent.y.toDouble()))
                         val result = recognizer.recognize(points)
-                        Log.d(TAG, "Name: " + result.name)
-                        Log.d(TAG, "Score: " + result.score)
-
-                        val textView = findViewById(ID_TEXT_VIEW) as TextView
-                        textView.text = result.name
+                        resultView.updateResult(result.name, result.score.toString())
+                        Log.i(TAG, "Name: " + result.name)
+                        Log.i(TAG, "Score: " + result.score)
                     }
                 }
+                resultView.updatePoints(points)
+                resultView.invalidate()
                 true
             }
+        }
+    }
+
+    class ResultView(context: Context?) : View(context) {
+        var points: ArrayList<Point>
+        val paint: Paint
+        var resultText: String = ""
+        var resultScore: String = ""
+
+        init {
+            points = ArrayList<Point>()
+            paint = Paint()
+            paint.color = Color.GRAY
+            paint.strokeWidth = 10f
+            paint.textSize = 50f
+        }
+
+        override fun onDraw(canvas: Canvas) {
+            points.forEachIndexed { i, point -> run {
+                if (i < 1) {
+                    return@forEachIndexed
+                } else if (points.size < 2) {
+                    return
+                }
+                val firstPoint = points.get(i-1)
+                val secondPoint = points.get(i)
+                canvas.drawLine(firstPoint.x.toFloat(), firstPoint.y.toFloat(),
+                        secondPoint.x.toFloat(), secondPoint.y.toFloat(), paint)
+            } }
+            if (resultText.isNotEmpty()) {
+                canvas.drawText(resultText, points.last().x.toFloat(), points.last().y.toFloat(),
+                        paint)
+            }
+        }
+
+        fun updatePoints(points: ArrayList<Point>) {
+            this.points = points;
+        }
+
+        fun updateResult(resultText: String, resultScore: String) {
+            this.resultText = resultText
+            this.resultScore = resultScore
+        }
+
+        fun clearResults() {
+            this.resultText = ""
+            this.resultScore = ""
         }
     }
 }

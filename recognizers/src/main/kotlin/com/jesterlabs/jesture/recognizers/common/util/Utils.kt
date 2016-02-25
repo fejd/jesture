@@ -31,6 +31,17 @@ fun ArrayList<Double>.std(avg : Double) : Double {
     return Math.sqrt(sum / this.size)
 }
 
+fun ArrayList<Point>.toFloatArray() : FloatArray {
+    val floatArray = FloatArray(this.size * 2)
+    var index = 0
+    this.forEach {
+        floatArray.set(index, it.x.toFloat())
+        floatArray.set(++index, it.y.toFloat())
+        index++
+    }
+    return floatArray
+}
+
 fun distance(firstPoint: Point, secondPoint: Point) : Double {
     val dx = firstPoint.x - secondPoint.x
     val dy = firstPoint.y - secondPoint.y
