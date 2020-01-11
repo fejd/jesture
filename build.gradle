@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+        google()
         mavenCentral()
         jcenter()
     }
@@ -7,6 +8,7 @@ buildscript {
 
 allprojects {
     repositories {
+        google()
         mavenCentral()
         jcenter()
         // Use local Maven repository during development

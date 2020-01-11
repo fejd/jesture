@@ -40,7 +40,7 @@ import java.util.*
 
 class HelloRecognizerActivity : Activity() {
 
-    var recognizer = OneDollarRecognizer();
+    var recognizer = OneDollarRecognizer()
     val TAG = "HelloRecognizerActivity"
     var points: ArrayList<Point>
 
