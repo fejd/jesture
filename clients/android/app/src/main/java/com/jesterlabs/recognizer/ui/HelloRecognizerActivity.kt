@@ -56,8 +56,6 @@ class HelloRecognizerActivity : Activity() {
 
         val ID_TEXT_VIEW = 1
         verticalLayout {
-            padding = dip(30)
-
             val resultView = resultView {
                 id = ID_TEXT_VIEW
             }
