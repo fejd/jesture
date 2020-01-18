@@ -27,6 +27,6 @@ mainClassName = 'com.jesterlabs.recognizer.java.JavaClientKt'
 defaultTasks 'run'
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile 'com.jesterlabs.jesture:recognizers:0.1.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation project(":recognizers")
 }
