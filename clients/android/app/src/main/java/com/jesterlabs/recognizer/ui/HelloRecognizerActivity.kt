@@ -107,7 +107,7 @@ class HelloRecognizerActivity : AppCompatActivity() {
         }
 
         override fun onDraw(canvas: Canvas) {
-            points.forEachIndexed { i, point -> run {
+            points.forEachIndexed { i, _ -> run {
                 if (i < 1) {
                     return@forEachIndexed
                 } else if (points.size < 2) {
