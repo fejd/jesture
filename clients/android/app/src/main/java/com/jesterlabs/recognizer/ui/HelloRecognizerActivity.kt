@@ -20,7 +20,6 @@
 
 package com.jesterlabs.recognizer.ui
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -30,11 +29,12 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import com.jesterlabs.jesture.recognizers.common.data.Point
 import com.jesterlabs.jesture.recognizers.onedollar.OneDollarRecognizer
 import java.util.*
 
-class HelloRecognizerActivity : Activity() {
+class HelloRecognizerActivity : AppCompatActivity() {
 
     var recognizer = OneDollarRecognizer()
     val TAG = "HelloRecognizerActivity"
@@ -107,7 +107,7 @@ class HelloRecognizerActivity : Activity() {
         }
 
         override fun onDraw(canvas: Canvas) {
-            points.forEachIndexed { i, point -> run {
+            points.forEachIndexed { i, _ -> run {
                 if (i < 1) {
                     return@forEachIndexed
                 } else if (points.size < 2) {

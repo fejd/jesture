@@ -20,4 +20,30 @@
 
 package com.jesterlabs.jesture.recognizers.common.data
 
+/**
+ * Represents a 2D point in Cartesian coordinate space.
+ *
+ * Points are the fundamental building blocks of gestures. A gesture is represented
+ * as a sequence of points captured over time (e.g., from mouse movement or touch input).
+ *
+ * ## Coordinate System
+ * - **Origin**: Top-left (0, 0) - standard screen coordinates
+ * - **X-axis**: Increases to the right
+ * - **Y-axis**: Increases downward
+ *
+ * ## Usage Example
+ * ```kotlin
+ * // Create a point
+ * val point = Point(100.0, 150.0)
+ *
+ * // Build a gesture from touch events
+ * val gesture = mutableListOf<Point>()
+ * gesture.add(Point(event.x.toDouble(), event.y.toDouble()))
+ * ```
+ *
+ * @property x The horizontal coordinate
+ * @property y The vertical coordinate
+ * @see Template
+ * @see OneDollarRecognizer
+ */
 data class Point(val x: Double, val y: Double)
