@@ -23,27 +23,95 @@ package com.jesterlabs.jesture.recognizers.common.util
 import com.jesterlabs.jesture.recognizers.common.data.Point
 import java.util.*
 
+/**
+ * Factory class providing predefined gesture templates for common shapes and symbols.
+ *
+ * This class provides point data for 16 standard gesture templates that are commonly
+ * used in gesture recognition applications. These templates are based on the original
+ * $1 Unistroke Recognizer dataset.
+ *
+ * ## Available Templates
+ * - **Basic Shapes**: TRIANGLE, RECTANGLE, CIRCLE, STAR
+ * - **Symbols**: X, V, CHECK, CARET, ARROW, DELETE
+ * - **Brackets**: LEFT_SQUARE_BRACKET, RIGHT_SQUARE_BRACKET, LEFT_CURLY_BRACE, RIGHT_CURLY_BRACE
+ * - **Lines**: ZIGZAG, PIGTAIL
+ *
+ * ## Usage Example
+ * ```kotlin
+ * val factory = StrokeFactory()
+ *
+ * // Get points for a specific template
+ * val circlePoints = factory.getStrokePoints(StrokeFactory.StrokeTemplate.CIRCLE)
+ *
+ * // Create a custom template from factory data
+ * val template = Template("MyCircle", circlePoints)
+ * ```
+ *
+ * @see StrokeTemplate
+ * @see Template
+ * @see Point
+ */
 open class StrokeFactory {
 
+    /**
+     * Enumeration of all available predefined gesture templates.
+     *
+     * Each template represents a commonly recognized shape or symbol that can be
+     * used for gesture recognition. The templates are based on the reference
+     * implementations from the original $1 Unistroke Recognizer paper.
+     *
+     * ## Categories
+     * - **Geometric Shapes**: Basic shapes like triangles, rectangles, and circles
+     * - **Punctuation/Symbols**: Checkmarks, carets, arrows, and delete symbols
+     * - **Brackets**: Various bracket and brace styles for programming/editing gestures
+     * - **Freeform**: Zigzags and decorative strokes like pigtails
+     */
     enum class StrokeTemplate {
+        /** Triangle shape - three-sided polygon */
         TRIANGLE,
+        /** X or cross shape - two diagonal lines intersecting */
         X,
+        /** Rectangle shape - four-sided polygon with right angles */
         RECTANGLE,
+        /** Circle shape - closed curve with constant radius */
         CIRCLE,
+        /** Check mark - validation or completion symbol */
         CHECK,
+        /** Caret (^) - upward-pointing wedge symbol */
         CARET,
+        /** Zigzag pattern - alternating diagonal line segments */
         ZIGZAG,
+        /** Arrow - directional indicator */
         ARROW,
+        /** Left square bracket ([) - opening bracket symbol */
         LEFT_SQUARE_BRACKET,
+        /** Right square bracket (]) - closing bracket symbol */
         RIGHT_SQUARE_BRACKET,
+        /** V shape - two lines meeting at a point */
         V,
+        /** Delete symbol - strikethrough or crossing-out gesture */
         DELETE,
+        /** Left curly brace ({) - opening brace symbol */
         LEFT_CURLY_BRACE,
+        /** Right curly brace (}) - closing brace symbol */
         RIGHT_CURLY_BRACE,
+        /** Star shape - multi-pointed radial pattern */
         STAR,
+        /** Pigtail - spiral or curly decorative stroke */
         PIGTAIL
     }
 
+    /**
+     * Retrieves the point sequence for a specified template.
+     *
+     * Returns a list of points that define the shape of the requested gesture template.
+     * These points represent a reference gesture captured from the original $1 dataset.
+     *
+     * @param template The template type to retrieve points for
+     * @return A list of points defining the gesture shape, or an empty list if the template is not recognized
+     * @see StrokeTemplate
+     * @see Point
+     */
     open fun getStrokePoints(template: StrokeTemplate) : ArrayList<Point> {
         when (template) {
             StrokeTemplate.TRIANGLE -> return arrayListOf(Point(137.0,139.0),Point(135.0,141.0),Point(133.0,144.0),Point(132.0,146.0),Point(130.0,149.0),Point(128.0,151.0),Point(126.0,155.0),Point(123.0,160.0),Point(120.0,166.0),Point(116.0,171.0),Point(112.0,177.0),Point(107.0,183.0),Point(102.0,188.0),Point(100.0,191.0),Point(95.0,195.0),Point(90.0,199.0),Point(86.0,203.0),Point(82.0,206.0),Point(80.0,209.0),Point(75.0,213.0),Point(73.0,213.0),Point(70.0,216.0),Point(67.0,219.0),Point(64.0,221.0),Point(61.0,223.0),Point(60.0,225.0),Point(62.0,226.0),Point(65.0,225.0),Point(67.0,226.0),Point(74.0,226.0),Point(77.0,227.0),Point(85.0,229.0),Point(91.0,230.0),Point(99.0,231.0),Point(108.0,232.0),Point(116.0,233.0),Point(125.0,233.0),Point(134.0,234.0),Point(145.0,233.0),Point(153.0,232.0),Point(160.0,233.0),Point(170.0,234.0),Point(177.0,235.0),Point(179.0,236.0),Point(186.0,237.0),Point(193.0,238.0),Point(198.0,239.0),Point(200.0,237.0),Point(202.0,239.0),Point(204.0,238.0),Point(206.0,234.0),Point(205.0,230.0),Point(202.0,222.0),Point(197.0,216.0),Point(192.0,207.0),Point(186.0,198.0),Point(179.0,189.0),Point(174.0,183.0),Point(170.0,178.0),Point(164.0,171.0),Point(161.0,168.0),Point(154.0,160.0),Point(148.0,155.0),Point(143.0,150.0),Point(138.0,148.0),Point(136.0,148.0))

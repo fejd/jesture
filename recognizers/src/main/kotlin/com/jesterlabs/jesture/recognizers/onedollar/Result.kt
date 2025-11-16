@@ -20,4 +20,38 @@
 
 package com.jesterlabs.jesture.recognizers.onedollar
 
+/**
+ * Represents the result of a gesture recognition attempt.
+ *
+ * Contains both the name of the best-matching template and a confidence score
+ * indicating how well the input gesture matched the template.
+ *
+ * ## Score Interpretation
+ * The score is a normalized value between 0.0 and 1.0:
+ * - **1.0**: Perfect match (identical gestures)
+ * - **0.90-0.99**: Excellent match (highly confident recognition)
+ * - **0.70-0.89**: Good match (reasonable confidence)
+ * - **0.50-0.69**: Weak match (low confidence)
+ * - **< 0.50**: Poor match (likely incorrect)
+ *
+ * Applications should establish threshold values based on their specific use case.
+ * For example, a drawing app might require scores > 0.85, while a casual game
+ * might accept scores > 0.70.
+ *
+ * ## Usage Example
+ * ```kotlin
+ * val result = recognizer.recognize(userPoints)
+ *
+ * if (result.score > 0.85) {
+ *     println("Recognized ${result.name} with high confidence!")
+ *     executeGesture(result.name)
+ * } else {
+ *     println("Uncertain recognition: ${result.name} (${result.score})")
+ * }
+ * ```
+ *
+ * @property name The name of the best-matching template (e.g., "CIRCLE", "TRIANGLE")
+ * @property score The confidence score ranging from 0.0 (no match) to 1.0 (perfect match)
+ * @see OneDollarRecognizer.recognize
+ */
 data class Result(val name: String, val score: Double)

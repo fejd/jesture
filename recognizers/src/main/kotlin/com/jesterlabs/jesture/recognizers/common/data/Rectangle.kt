@@ -20,4 +20,28 @@
 
 package com.jesterlabs.jesture.recognizers.common.data
 
+/**
+ * Represents an axis-aligned bounding rectangle.
+ *
+ * Rectangles are used internally by the $1 algorithm to compute bounding boxes
+ * for gesture normalization and scaling operations.
+ *
+ * ## Coordinate System
+ * - **x, y**: The top-left corner of the rectangle
+ * - **width**: The horizontal extent of the rectangle
+ * - **height**: The vertical extent of the rectangle
+ *
+ * ## Usage Example
+ * ```kotlin
+ * // Create a rectangle
+ * val bounds = Rectangle(x = 10.0, y = 20.0, width = 100.0, height = 50.0)
+ *
+ * // The rectangle extends from (10, 20) to (110, 70)
+ * ```
+ *
+ * @property x The x-coordinate of the top-left corner
+ * @property y The y-coordinate of the top-left corner
+ * @property width The width of the rectangle (horizontal extent)
+ * @property height The height of the rectangle (vertical extent)
+ */
 data class Rectangle(val x: Double, val y: Double, val width: Double, val height: Double)
