@@ -29,13 +29,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewManager
+import android.widget.LinearLayout
 import com.jesterlabs.jesture.recognizers.common.data.Point
 import com.jesterlabs.jesture.recognizers.onedollar.OneDollarRecognizer
-import org.jetbrains.anko.custom.ankoView
-import org.jetbrains.anko.dip
-import org.jetbrains.anko.padding
-import org.jetbrains.anko.verticalLayout
 import java.util.*
 
 class HelloRecognizerActivity : Activity() {
@@ -48,42 +44,52 @@ class HelloRecognizerActivity : Activity() {
         points = ArrayList<Point>()
     }
 
-    inline fun ViewManager.resultView() = resultView {}
-    inline fun ViewManager.resultView(init: ResultView.() -> Unit) = ankoView({ ResultView(it) }, init)
-
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val ID_TEXT_VIEW = 1
-        verticalLayout {
-            val resultView = resultView {
-                id = ID_TEXT_VIEW
-            }
-
-            setOnTouchListener { resultText, motionEvent ->
-                val resultView = findViewById(ID_TEXT_VIEW) as ResultView
-                when(motionEvent.actionMasked) {
-                    MotionEvent.ACTION_DOWN -> {
-                        resultView.clearResults()
-                        points.clear()
-                        points.add(Point(motionEvent.x.toDouble(), motionEvent.y.toDouble()))
-                    }
-                    MotionEvent.ACTION_MOVE -> {
-                        points.add(Point(motionEvent.x.toDouble(), motionEvent.y.toDouble()))
-                    }
-                    MotionEvent.ACTION_UP -> {
-                        points.add(Point(motionEvent.x.toDouble(), motionEvent.y.toDouble()))
-                        val result = recognizer.recognize(points)
-                        resultView.updateResult(result.name, result.score.toString())
-                        Log.i(TAG, "Name: " + result.name)
-                        Log.i(TAG, "Score: " + result.score)
-                    }
-                }
-                resultView.updatePoints(points)
-                resultView.invalidate()
-                true
-            }
+        // Create layout programmatically without Anko
+        val layout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+            )
         }
+
+        // Create and add ResultView
+        val resultView = ResultView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+            )
+        }
+        layout.addView(resultView)
+
+        // Set touch listener
+        layout.setOnTouchListener { _, motionEvent ->
+            when(motionEvent.actionMasked) {
+                MotionEvent.ACTION_DOWN -> {
+                    resultView.clearResults()
+                    points.clear()
+                    points.add(Point(motionEvent.x.toDouble(), motionEvent.y.toDouble()))
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    points.add(Point(motionEvent.x.toDouble(), motionEvent.y.toDouble()))
+                }
+                MotionEvent.ACTION_UP -> {
+                    points.add(Point(motionEvent.x.toDouble(), motionEvent.y.toDouble()))
+                    val result = recognizer.recognize(points)
+                    resultView.updateResult(result.name, result.score.toString())
+                    Log.i(TAG, "Name: " + result.name)
+                    Log.i(TAG, "Score: " + result.score)
+                }
+            }
+            resultView.updatePoints(points)
+            resultView.invalidate()
+            true
+        }
+
+        setContentView(layout)
     }
 
     class ResultView(context: Context?) : View(context) {

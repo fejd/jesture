@@ -1,51 +1,25 @@
 buildscript {
-    ext.kotlin_version = '1.3.61'
+    ext.kotlin_version = '1.9.22'
 
     repositories {
         mavenCentral()
-        jcenter()
-        maven {
-            url "https://dl.bintray.com/kotlin/kotlin-eap"
-        }
     }
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
     }
 }
 
 apply plugin: 'kotlin'
-apply plugin: 'maven'
 apply plugin: "maven-publish"
-apply plugin: 'com.jfrog.bintray'
 
 version = '0.1.0'
 group = 'com.jesterlabs.jesture'
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    testCompile 'junit:junit:4.12'
-    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
-}
-
-bintray {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
-    publications = ['myPublication']
-
-    pkg {
-        repo = 'maven'
-        name = 'jesture'
-        licenses = ['MIT']
-        vcsUrl = 'https://github.com/fejd/jesture.git'
-
-        version {
-            name = '0.1.0'
-            desc = 'Jesture 0.1.0'
-            released  = new Date()
-        }
-    }
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 }
 
 publishing {
